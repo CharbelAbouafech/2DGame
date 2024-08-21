@@ -1,5 +1,4 @@
 package My2DGame;
-
 import javax.swing.*;
 
 public class My2DGame {
