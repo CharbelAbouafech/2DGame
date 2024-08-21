@@ -20,6 +20,13 @@ public class Player extends Entity {
 
         screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
         screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
+
+        solidArea = new Rectangle();
+        solidArea.x = 8;
+        solidArea.y = 16;
+        solidArea.width = 32;
+        solidArea.height = 32;
+
         setDefaultValues();
         getPlayerImage();
     }
@@ -34,10 +41,10 @@ public class Player extends Entity {
     public void getPlayerImage() {
 
         try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-front-1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-front-2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-back-1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-back-2.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-back-1.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-back-2.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-front-1.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-front-2.png"));
             left1 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-left-1.png"));
             left2 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-left-2.png"));
             right1 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-right-1.png"));
@@ -53,17 +60,32 @@ public class Player extends Entity {
         if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) { // in java the upper left corner is x:0,y:0. X increased to the right and Y increased as they go down
             if (keyH.upPressed == true) {
                 direction = "up";
-                worldY -= speed; //playerY = playerY  - playerSpeed
+
             } else if (keyH.downPressed == true) {
                 direction = "down";
-                worldY += speed;
+
             } else if (keyH.leftPressed == true) {
                 direction = "left";
-                worldX -= speed;
+
             } else if (keyH.rightPressed == true) {
                 direction = "right";
-                worldX += speed;
+
             }
+
+            // CHECK TILE COLLISION
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+
+            // IF COLLISION IS FALSE, PLAYER CAN MOVE
+            if(collisionOn == false) {
+                switch(direction) {
+                    case "up": worldY -= speed; break;
+                    case "down": worldY += speed; break;
+                    case "left": worldX -= speed; break;
+                    case "right": worldX += speed; break;
+                }
+            }
+
             spriteCounter++;
             if (spriteCounter > 15) {
                 if (spriteNum == 1) {
