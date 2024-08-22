@@ -2,6 +2,7 @@ package My2DGame;
 
 import Entity.Player;
 import tile.TileManager;
+import Object.SuperObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,8 +31,9 @@ public class GamePanel extends JPanel implements Runnable {
         KeyHandler keyH = new KeyHandler();
         Thread gameThread; //to use it we implement runnable
         public CollisionChecker cChecker = new CollisionChecker(this);
+        public AssetSetter aSetter = new AssetSetter(this);
         public Player player = new Player(this,keyH);
-
+        public SuperObject[] obj = new SuperObject[10];
 
 
 
@@ -43,6 +45,14 @@ public class GamePanel extends JPanel implements Runnable {
             this.setFocusable(true); //gamepanel can be focused to use key input
 
         }
+
+        public void setupGame() {
+
+            aSetter.setObject();
+
+
+        }
+
         public void startGameThread() {
 
             gameThread = new Thread(this);
@@ -124,7 +134,18 @@ public class GamePanel extends JPanel implements Runnable {
             super.paintComponent(g);
 
             Graphics2D g2 = (Graphics2D)g; //we change graphics g to graphics2D
+
+            // TILE
             tileM.draw(g2);
+
+            // OBJECT
+            for(int i = 0; i < obj.length; i++) {
+                if(obj[i] != null) {
+                    obj[i].draw(g2, this);
+                }
+            }
+
+            // PLAYER
             player.draw(g2);
             g2.dispose(); // dispose of this graphics context and release any system resources that it is using
 
