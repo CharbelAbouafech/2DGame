@@ -22,16 +22,20 @@ public class GamePanel extends JPanel implements Runnable {
         // WORLD SETTINGS
         public final int maxWorldCol = 50;
         public final int maxWorldRow = 50;
-        public final int worldWidth = tileSize * maxWorldCol;
-        public final int worldHeight = tileSize * maxWorldRow;
 
         int FPS = 60;
 
+        // SYSTEM
         TileManager tileM = new TileManager(this);
         KeyHandler keyH = new KeyHandler();
-        Thread gameThread; //to use it we implement runnable
+        Sound music = new Sound();
+        Sound se = new Sound();
         public CollisionChecker cChecker = new CollisionChecker(this);
         public AssetSetter aSetter = new AssetSetter(this);
+        public UI ui = new UI(this);
+        Thread gameThread; //to use it we implement runnable
+
+        // ENTITY AND OBJECT
         public Player player = new Player(this,keyH);
         public SuperObject[] obj = new SuperObject[10];
 
@@ -47,14 +51,12 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         public void setupGame() {
-
             aSetter.setObject();
-
+            PlayMusic(0);
 
         }
 
         public void startGameThread() {
-
             gameThread = new Thread(this);
             gameThread.start();
 
@@ -119,7 +121,6 @@ public class GamePanel extends JPanel implements Runnable {
                 }
 
                 if(timer >= 1000000000) {
-                    System.out.println("FPS: " + frames);
                     frames = 0;
                     timer = 0;
                 }
@@ -147,7 +148,31 @@ public class GamePanel extends JPanel implements Runnable {
 
             // PLAYER
             player.draw(g2);
+
+            // UI
+            ui.draw(g2);
+
             g2.dispose(); // dispose of this graphics context and release any system resources that it is using
 
+
+
         }
+
+        // MUSIC AND SOUNDS
+
+        public void PlayMusic(int i) {
+            music.setFile(i);
+            music.play();
+            music.loop();
+        }
+
+        public void StopMusic() {
+            music.stop();
+        }
+
+        public void PlaySoundEffect(int i) {
+            se.setFile(i);
+            se.play();
+        }
+
 }
