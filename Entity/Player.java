@@ -2,6 +2,8 @@ package Entity;
 
 import My2DGame.GamePanel;
 import My2DGame.KeyHandler;
+import My2DGame.UtilityTool;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -43,22 +45,30 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
+        up1 = setup("pixil-frame-back-1");
+        up2 = setup("pixil-frame-back-2");
+        down1 = setup("pixil-frame-front-1");
+        down2 = setup("pixil-frame-front-2");
+        left1 = setup("pixil-frame-left-1");
+        left2 = setup("pixil-frame-left-2");
+        right1 = setup("pixil-frame-right-1");
+        right2 = setup("pixil-frame-right-2");
 
-        try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-back-1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-back-2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-front-1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-front-2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-left-1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-left-2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-right-1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/pixil-frame-right-2.png"));
+    }
+    public BufferedImage setup(String imageName) {
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
 
-        } catch (IOException e) {
+        try{
+            image = ImageIO.read(getClass().getResourceAsStream("/player/"+ imageName + ".png"));
+            image = uTool.scaleImage(image,gp.tileSize,gp.tileSize);
+
+        }catch(IOException e) {
             e.printStackTrace();
         }
-    }
+        return image;
 
+    }
     public void update() {
 
         if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) { // in java the upper left corner is x:0,y:0. X increased to the right and Y increased as they go down
@@ -193,6 +203,6 @@ public class Player extends Entity {
                 }
                 break;
         }
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, screenX, screenY, null);
     }
 }
