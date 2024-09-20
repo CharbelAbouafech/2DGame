@@ -21,4 +21,3 @@ public class My2DGame {
             gamePanel.startGameThread();
     }
 }
-        

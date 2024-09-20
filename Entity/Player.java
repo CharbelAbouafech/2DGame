@@ -15,7 +15,7 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
-    public int hasKey = 0;
+    // public int hasKey = 0;
     public int standCounter = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -124,40 +124,7 @@ public class Player extends Entity {
     }
     public void pickUpObject(int i) {
         if(i != 999) {
-            String objectName = gp.obj[i].name;
-            switch(objectName) {
-                case "Key":
-                    gp.PlaySoundEffect(1);
-                    hasKey++;
-                    gp.obj[i] = null;
-                    gp.ui.ShowMessage("You got a key!");
-                    break;
 
-                case "Door":
-                    if(hasKey > 0) {
-                        gp.PlaySoundEffect(3);
-                        gp.obj[i] = null;
-                        hasKey--;
-                        gp.ui.ShowMessage("You opened the door!");
-                    }
-                    else {
-                        gp.ui.ShowMessage("You need a key!");
-                    }
-                    break;
-
-                case "Boots" :
-                    gp.PlaySoundEffect(2);
-                    speed += 1;
-                    gp.obj[i] = null;
-                    gp.ui.ShowMessage("Speed up!");
-                    break;
-                case "Chest" :
-                    gp.ui.GameFinished = true;
-                    gp.StopMusic();
-                    gp.PlaySoundEffect(4);
-                    break;
-
-            }
         }
 
     }
@@ -203,6 +170,27 @@ public class Player extends Entity {
                 }
                 break;
         }
-        g2.drawImage(image, screenX, screenY, null);
+
+        int x = screenX;
+        int y = screenY;
+
+        if(screenX > worldX) {
+            x = worldX;
+        }
+        if(screenY > worldY) {
+            y = worldY;
+        }
+        int rightOffset = gp.screenWidth - screenX;
+        if(rightOffset > gp.worldWidth - worldX) {
+            y = gp.screenWidth - (gp.worldWidth - worldX);
+        }
+        int bottomOffset = gp.screenHeight - screenY;
+        if(bottomOffset > gp.worldHeight - worldY) {
+            x = gp.screenHeight - (gp.worldHeight - worldY);
+        }
+
+
+
+        g2.drawImage(image, x, y, null);
     }
 }
