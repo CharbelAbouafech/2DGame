@@ -1,4 +1,5 @@
 package Entity;
+import My2DGame.GamePanel;
 
 public class NPC_OldMan extends Entity{
     public NPC_OldMan(GamePanel gp) {
@@ -8,7 +9,7 @@ public class NPC_OldMan extends Entity{
 
         getImage();
     }
-    public void getPlayerImage() {
+    public void getImage() {
         up1 = setup("/npc/oldman_up_1");
         up2 = setup("/npc/oldman_up_2");
         down1 = setup("/npc/oldman_down_1");

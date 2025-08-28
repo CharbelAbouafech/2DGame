@@ -2,6 +2,7 @@ package My2DGame;
 import Entity.Player;
 import tile.TileManager;
 import Object.SuperObject;
+import Entity.Entity;
 
 import javax.swing.*;
 import java.awt.*;
