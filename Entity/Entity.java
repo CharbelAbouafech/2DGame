@@ -1,6 +1,5 @@
 package Entity;
 import My2DGame.GamePanel;
-import My2DGame.UtilityTool;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
