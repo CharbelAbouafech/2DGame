@@ -10,16 +10,16 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Player extends Entity {
-
+    GamePanel gp;
     KeyHandler keyH;
+
     public final int screenX;
     public final int screenY;
-
+    // public int hasKey = 0;
     public int standCounter = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
-        super(gp);
-
+        this.gp = gp;
         this.keyH = keyH;
 
         screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
@@ -45,17 +45,30 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
-        up1 = setup("/player/pixil-frame-back-1");
-        up2 = setup("/player/pixil-frame-back-2");
-        down1 = setup("/player/pixil-frame-front-1");
-        down2 = setup("/player/pixil-frame-front-2");
-        left1 = setup("/player/pixil-frame-left-1");
-        left2 = setup("/player/pixil-frame-left-2");
-        right1 = setup("/player/pixil-frame-right-1");
-        right2 = setup("/player/pixil-frame-right-2");
+        up1 = setup("pixil-frame-back-1");
+        up2 = setup("pixil-frame-back-2");
+        down1 = setup("pixil-frame-front-1");
+        down2 = setup("pixil-frame-front-2");
+        left1 = setup("pixil-frame-left-1");
+        left2 = setup("pixil-frame-left-2");
+        right1 = setup("pixil-frame-right-1");
+        right2 = setup("pixil-frame-right-2");
 
     }
+    public BufferedImage setup(String imageName) {
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
 
+        try{
+            image = ImageIO.read(getClass().getResourceAsStream("/player/"+ imageName + ".png"));
+            image = uTool.scaleImage(image,gp.tileSize,gp.tileSize);
+
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+
+    }
     public void update() {
 
         if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) { // in java the upper left corner is x:0,y:0. X increased to the right and Y increased as they go down
