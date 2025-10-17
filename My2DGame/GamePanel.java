@@ -37,7 +37,6 @@ public class GamePanel extends JPanel implements Runnable {
     public UI ui = new UI(this);
     Thread gameThread; //to use it we implement runnable
 
-<<<<<<< HEAD
     // ENTITY AND OBJECT
     public Player player = new Player(this,keyH);
     public SuperObject[] obj = new SuperObject[10];
@@ -46,16 +45,6 @@ public class GamePanel extends JPanel implements Runnable {
     public int gameState;
     public final int playState = 1;
     public final int pauseState = 2;
-=======
-        // ENTITY AND OBJECT
-        public Player player = new Player(this,keyH);
-        public SuperObject[] obj = new SuperObject[10];
-
-        // GAME STATE
-        public int gameState;
-        public final int playState = 1;
-        public final int pauseState = 2;
->>>>>>> parent of 378b7f8 (NPC 1)
 
 
 
@@ -68,18 +57,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-<<<<<<< HEAD
     public void setupGame() {
         aSetter.setObject();
         aSetter.setNPC();
         PlayMusic(0);
         gameState = playState;
-=======
-        public void setupGame() {
-            aSetter.setObject();
-            PlayMusic(0);
-            gameState = playState;
->>>>>>> parent of 378b7f8 (NPC 1)
 
     }
 
@@ -157,53 +139,8 @@ public class GamePanel extends JPanel implements Runnable {
         if(gameState == playState){
             player.update();
         }
-<<<<<<< HEAD
         if(gameState == pauseState) {
             // nothing
-=======
-        public void paintComponent(Graphics g){ //graphics always you to draw objects on screen
-
-            super.paintComponent(g);
-
-            Graphics2D g2 = (Graphics2D)g; //we change graphics g to graphics2D
-
-            // TILE
-            tileM.draw(g2);
-
-            // DEBUG
-            long drawStart = 0;
-            if(keyH.checkDrawTime == true) {
-                drawStart = System.nanoTime();
-            }
-
-                // OBJECT
-            for(int i = 0; i < obj.length; i++) {
-                if(obj[i] != null) {
-                    obj[i].draw(g2, this);
-                }
-            }
-
-            // PLAYER
-            player.draw(g2);
-
-            // UI
-            ui.draw(g2);
-
-            //DEBUG
-            if(keyH.checkDrawTime == true) {
-                long drawEnd = System.nanoTime();
-                long passed = drawEnd - drawStart;
-                g2.setColor(Color.white);
-                g2.drawString("Draw Time: " + passed, 10 , 400);
-                System.out.println("DRAW TIME: " + passed);
-            }
-
-
-            g2.dispose(); // dispose of this graphics context and release any system resources that it is using
-
-
-
->>>>>>> parent of 378b7f8 (NPC 1)
         }
 
 
