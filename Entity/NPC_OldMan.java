@@ -1,12 +1,14 @@
 package Entity;
 
+import My2DGame.GamePanel;
+
 public class NPC_OldMan extends Entity{
     public NPC_OldMan(GamePanel gp) {
         super(gp);
         direction = "down";
         speed = 1;
 
-        getImage();
+        getPlayerImage();
     }
     public void getPlayerImage() {
         up1 = setup("/npc/oldman_up_1");

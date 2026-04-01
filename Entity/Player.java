@@ -16,6 +16,7 @@ public class Player extends Entity {
     public final int screenY;
 
     public int standCounter = 0;
+    public int hasKey = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -111,9 +112,32 @@ public class Player extends Entity {
     }
     public void pickUpObject(int i) {
         if(i != 999) {
+            String objName = gp.obj[i].name;
 
+            switch(objName) {
+                case "Key":
+                    gp.PlaySoundEffect(1);
+                    gp.obj[i] = null;
+                    hasKey++;
+                    gp.ui.ShowMessage("You got a key!");
+                    break;
+                case "Door":
+                    if(hasKey > 0) {
+                        gp.PlaySoundEffect(3);
+                        gp.obj[i] = null;
+                        hasKey--;
+                        gp.ui.ShowMessage("Door unlocked!");
+                    } else {
+                        gp.ui.ShowMessage("You need a key!");
+                    }
+                    break;
+                case "Chest":
+                    gp.PlaySoundEffect(4);
+                    gp.gameState = gp.winState;
+                    gp.ui.GameFinished = true;
+                    break;
+            }
         }
-
     }
 
     public void draw(Graphics2D g2) {
